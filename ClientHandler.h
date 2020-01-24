@@ -108,9 +108,14 @@ public:
         string temp = buffer;
         while (!temp.empty()) {
             int i = temp.find('\n');
-            string part = temp.substr(0,i-1);
+            //didnt find the \n, hold the line
+            if (i == -1) {
+                *buffer = temp[0];
+                return;
+            }
+            string part = temp.substr(0,i);
             theMatrix.push_back(makeRow(part));
-            temp = temp.substr(i, 0);
+            temp = temp.substr(i + 1, temp.size());
         }
 
     }
