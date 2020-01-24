@@ -104,20 +104,19 @@ public:
         this->solver->deepCopy();
         return new ClientHandlerMat(this->cacheManager);
     }
-    void setTheLine(vector<vector<double>> theMatrix,char* buffer) {
+    void setTheLine(vector<vector<double>> theMatrix,char* buffer, char* halfBuf) {
         string temp = buffer;
         while (!temp.empty()) {
             int i = temp.find('\n');
             //didnt find the \n, hold the line
             if (i == -1) {
-                *buffer = temp[0];
+                *halfBuf = temp[0];
                 return;
             }
             string part = temp.substr(0,i);
             theMatrix.push_back(makeRow(part));
             temp = temp.substr(i + 1, temp.size());
         }
-
     }
 
 
@@ -147,6 +146,7 @@ public:
         string matString = "";
         string beginMat;
         string goalMat;
+        string halfBuffer;
         while(1){
             char buffer[1024] = {0};
             read(client_socket, buffer, 1024);
@@ -155,7 +155,7 @@ public:
             temp = temp.substr(0, temp.size() - 2);
             beginMat = goalMat;
             goalMat = temp;
-            setTheLine(theMatrix,buffer);
+            setTheLine(theMatrix,buffer, &halfBuffer);
             if (!strncmp(buffer, "end", 3)) {
                 theMatrix.pop_back();
                 theMatrix.pop_back();
