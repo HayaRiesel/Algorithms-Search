@@ -64,8 +64,8 @@ class MatrixSolver : public Solver<Problem,Solution>{
 
     string solveTheProb(Matrix<double> matrix) {
         Searcheable<double >* graph = new Graph<double>(matrix);
-        BestFirstSearch<double> bfs;
-        string solution = findPath(bfs.Search(graph));
+        Astar<double> aStar;
+        string solution = findPath(aStar.Search(graph));
         return solution;
     }
 
