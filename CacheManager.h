@@ -2,8 +2,6 @@
 #define UNTITLED9_CACHEMANAGER_H
 
 #include <iostream>
-
-
 #include <string>
 #include <unordered_map>
 #include <fstream>
