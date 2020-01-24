@@ -105,7 +105,13 @@ public:
         return new ClientHandlerMat(this->cacheManager);
     }
     void setTheLine(vector<vector<double>> theMatrix,char* buffer, char* halfBuf) {
-        string temp = buffer;
+        string temp;
+        if (*halfBuf != "") {
+            temp = *halfBuf + buffer;
+        } else {
+            temp = buffer;
+        }
+
         while (!temp.empty()) {
             int i = temp.find('\n');
             //didnt find the \n, hold the line
@@ -179,11 +185,15 @@ public:
             string solution;
             try {
                 //get get string
-                solution = cacheManager->get(matKey);
+                string s(cacheManager->get(matKey))
+                solution = s;
             }
              catch (const char *msg) {
                  solution = solver->solveTheProb(*matrix);
-                cacheManager->insert(matKey, solution);
+                 char solutionInChar[solution.size() + 1];
+                 strcpy(solutionInChar, solution.c_str());	// or pass &s[0]
+
+                 cacheManager->insert(matKey, solutionInChar);
             }
             std::cout << solution << std::endl;
 
