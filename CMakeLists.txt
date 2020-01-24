@@ -4,4 +4,4 @@ project(untitled9)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_FLAGS -pthread)
 
-add_executable(untitled9 main.cpp)
+add_executable(untitled9 main.cpp boot.cpp boot.h)
